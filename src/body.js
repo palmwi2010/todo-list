@@ -1,6 +1,9 @@
 import {createElement} from './utils.js';
-import todoItems from './todos.json';
 import {makeCard} from './card.js';
+import {initializeScreen, Screen} from './screen.js';
+
+import todoItems from './todos.json';
+
 import composeImg from './assets/plus-box.svg';
 import deleteImg from './assets/delete.svg';
 
@@ -10,7 +13,7 @@ function render() {
     let $app = createElement({'type': 'div', 'id': 'app'});
 
     let $taskContainer = createElement({'type': 'div', 'elemClass': 'task-container'});
-    let $taskViewer = createElement({'type': 'div', 'elemClass': 'task-viewer'});
+    let $taskViewer = initializeScreen();
     let $appFooter = createElement({'type': 'div', 'elemClass': 'app-footer'});
 
     // Create compose button
@@ -31,12 +34,6 @@ function render() {
     img.alt = "Delete task icon";
     img.title = "Delete task";
     $appFooter.appendChild(img);
-
-    for (let i = 0; i < todoItems.length; i ++) {
-        let item = makeCard(todoItems[i]);
-        if (i === 0) item.id = 'active-card';
-        $taskContainer.appendChild(item);
-    }
 
     $app.appendChild($appFooter);
     $app.appendChild($taskContainer);
