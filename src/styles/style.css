@@ -2,26 +2,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: red;
 }
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
     --sidebar-color: #fbbf24;
     --banner-color: #78350f;
     --theme-shadow: #451a03;
+    --logo-theme: #991b1b;
+    --sidebar-text: #451a03;
 }
 
+/* Overall positioning */
 body {
     height: 100vh;
     width: 100vw;
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 12fr;
+    font-family: 'Roboto';
 }
 
 #top-banner {
-    grid-column: 2/-1;
-    grid-row: 1/2;
     background-color: var(--banner-color);
     box-shadow: 0 6px 5px 0 var(--theme-shadow);
 }
@@ -32,3 +36,61 @@ body {
     background-color: var(--sidebar-color);
     box-shadow: 2px 0 5px 0 var(--theme-shadow);
 }
+
+/* Sidebar */
+#sidebar {
+    padding: 32px max(32px, 10%);
+}
+
+.sidebar-logo {
+    font-family: 'Shantell Sans';
+    color: var(--logo-theme);
+    font-size: 40px;
+    letter-spacing: 0.15ch;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-style: dotted;
+    text-shadow: 2px 2px black;
+    transition-duration: 0.5s;
+    margin-bottom: 100px;
+}
+
+.sidebar-logo:hover {
+    cursor: pointer;
+    letter-spacing: 0.3ch;
+}
+
+.menu {
+    color: var(--sidebar-text);
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+
+.menu-header {
+    font-size: 24px;
+}
+
+.menu-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.icon {
+    width: 22px;
+}
+
+.menu-label {
+    font-size: 18px;
+    color: var(--sidebar-text);
+}
+
+.menu-item:hover {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Top banner */
