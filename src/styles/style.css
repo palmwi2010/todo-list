@@ -13,6 +13,7 @@
     --theme-shadow: #451a03;
     --logo-theme: #991b1b;
     --sidebar-text: #451a03;
+    --sidebar-active: #f59e0b;
 }
 
 /* Overall positioning */
@@ -21,7 +22,7 @@ body {
     width: 100vw;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1fr 12fr;
+    grid-template-rows: 110px 1fr;
     font-family: 'Roboto';
 }
 
@@ -66,7 +67,7 @@ body {
     margin-top: 60px;
     display: flex;
     flex-direction: column;
-    gap:10px
+    gap:4px
 }
 
 .menu-header {
@@ -77,6 +78,9 @@ body {
     display: flex;
     gap: 16px;
     align-items: center;
+    padding: 8px 16px 8px 8px;
+    border-radius: 25px;
+    width: fit-content;
 }
 
 .icon {
@@ -93,4 +97,57 @@ body {
     cursor: pointer;
 }
 
+#active-menu {
+    font-weight: 700;
+    background-color: var(--sidebar-active);
+}
+
 /* Top banner */
+#top-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    color: white;
+}
+
+.banner-right {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.profile-greet {
+    font-size: 18px;
+    color: wheat;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.1ch;
+}
+
+.profile-img {
+    margin-left: auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.logout-btn {
+    background-color: transparent;
+    font-size: 20px;
+    color: wheat;
+    outline: none;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition-duration: 0.3s;
+}
+
+.logout-btn:hover {
+    cursor: pointer;
+    color: var(--sidebar-text);
+    background-color: var(--sidebar-color);
+}

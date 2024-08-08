@@ -7,17 +7,23 @@ function render() {
     let $header = createElement({'type': 'p', 'elemClass': 'profile-greet', 'elemText': 'Welcome,'});
     let $greeting = createElement({'type': 'p', 'elemClass': 'profile-name', 'elemText': 'Bart52'});
     let $profileImg = createElement({'type': 'img', 'elemClass': 'profile-img'});
-    let $logoutBtn = createElement({'type': 'button', 'elemClass': 'logut-btn', 'elemText': 'Logout'});
+    let $logoutBtn = createElement({'type': 'button', 'elemClass': 'logout-btn', 'elemText': 'Logout'});
 
     $profileImg.src = profileImg;
     $profileImg.alt = 'User profile image';
 
-    $container.appendChild($header);
-    $container.appendChild($greeting);
-    $container.appendChild($profileImg);
-    $container.appendChild($logoutBtn);
+    let $left = createElement({'type': 'div', 'elemClass': 'banner-left'});
+    let $right = createElement({'type': 'div', 'elemClass': 'banner-right'});
 
-    return container;
+    $left.appendChild($header);
+    $left.appendChild($greeting);
+    $right.appendChild($profileImg);
+    $right.appendChild($logoutBtn);
+
+    $container.appendChild($left);
+    $container.appendChild($right);
+    
+    return $container;
 }
 
 export {render};

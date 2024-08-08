@@ -44,7 +44,11 @@ function render() {
     let $menuHeader = createElement({'type': 'h3', 'elemClass': 'menu-header', 'elemText': 'Dashboard'});
     $menu.appendChild($menuHeader);
 
-    menuItems[0].forEach(item => $menu.appendChild(createSidebarItem(item)));
+    menuItems[0].forEach(item => {
+        let $item = createSidebarItem(item);
+        if (item.name === 'All items') $item.id = 'active-menu';
+        $menu.appendChild($item);
+    });
 
     $container.appendChild($menu);
 
