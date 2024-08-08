@@ -18,23 +18,8 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              sources: {
-                list: [
-                  {
-                    tag: 'img',
-                    attribute: 'src',
-                    type: 'src',
-                  }
-                ]
-              }
-            }
-          }
-        ]
+        test: /\.json$/,
+        type: 'json',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -44,7 +29,7 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin(
     {
-      template: './src/index.html',
+      title: 'Tododay'
     }
   )]
 };

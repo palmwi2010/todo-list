@@ -4,3 +4,31 @@
     box-sizing: border-box;
     color: red;
 }
+
+:root {
+    --sidebar-color: #fbbf24;
+    --banner-color: #78350f;
+    --theme-shadow: #451a03;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 12fr;
+}
+
+#top-banner {
+    grid-column: 2/-1;
+    grid-row: 1/2;
+    background-color: var(--banner-color);
+    box-shadow: 0 6px 5px 0 var(--theme-shadow);
+}
+
+#sidebar {
+    grid-column: 1/2;
+    grid-row: 1/3;
+    background-color: var(--sidebar-color);
+    box-shadow: 2px 0 5px 0 var(--theme-shadow);
+}
