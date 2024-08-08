@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Change mortgage rate", 
+        "date": "12/08/2024", 
+        "priority": "high",
+        "description": "Phone up my mortgage advisor Anthony and ask him to change my mortgage rate.",
+        "tags": "Admin"
+    },
+    {
+        "title": "Go for a 7.5k run", 
+        "date": "14/08/2024", 
+        "priority": "medium",
+        "description": "Run a 7.5km loop around Barns Green. Do it as an interval training session to get better.",
+        "tags": "Sport"
+    },
+    {
+        "title": "Organise another house viewing", 
+        "date": "10/08/2024", 
+        "priority": "high",
+        "description": "Organise another house viewing to go and see the flat again with Mum and Daisy.",
+        "tags": "Sport"
+    }
+]
