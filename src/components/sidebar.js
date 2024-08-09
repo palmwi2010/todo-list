@@ -1,12 +1,12 @@
-import {createElement} from './utils.js';
-import allImg from './assets/all-inclusive-box.svg';
-import upcomingImg from './assets/forward.svg';
-import priorityImg from './assets/alert.svg';
-import completedImg from './assets/check-circle.svg';
-import categoryImg from './assets/folder.svg';
-import settingsImg from './assets/cog.svg';
-import privacyImg from './assets/book-alert.svg';
-import phoneImg from './assets/phone.svg';
+import {createElement} from '../utils.js';
+import allImg from '../assets/all-inclusive-box.svg';
+import upcomingImg from '../assets/forward.svg';
+import priorityImg from '../assets/alert.svg';
+import completedImg from '../assets/check-circle.svg';
+import categoryImg from '../assets/folder.svg';
+import settingsImg from '../assets/cog.svg';
+import privacyImg from '../assets/book-alert.svg';
+import phoneImg from '../assets/phone.svg';
 
 const menuItems = [
     [

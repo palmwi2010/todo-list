@@ -1,5 +1,4 @@
-import {createElement} from './utils.js';
-import {initializeScreen, Screen} from './screen.js';
+import {createElement} from '../utils.js';
 import { render as renderHeader } from './screen-header.js';
 import { render as renderScreen } from './screen.js';
 

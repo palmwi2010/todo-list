@@ -1,7 +1,7 @@
-import {createElement} from './utils.js';
-import categoryImg from './assets/rhombus.svg';
-import categories from './assets/categories.json'
-import { capitalizeFirstLetter } from './utils.js';
+import {createElement} from '../utils.js';
+import categoryImg from '../assets/rhombus.svg';
+import categories from '../static/categories.json'
+import { capitalizeFirstLetter } from '../utils.js';
 
 let $header = createElement({'type': 'textarea', 'elemClass': 'screen-header'});
 $header.classList.add('task-info');

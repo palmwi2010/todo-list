@@ -1,5 +1,5 @@
-import {createElement} from './utils.js';
-import profileImg from './assets/profile_img.jpg';
+import {createElement} from '../utils.js';
+import profileImg from '../assets/profile_img.jpg';
 
 function render() {
 

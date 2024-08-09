@@ -1,6 +1,6 @@
-import composeImg from './assets/plus-box.svg';
-import deleteImg from './assets/delete.svg';
-import completeImg from './assets/check-circle.svg'
+import composeImg from '../assets/plus-box.svg';
+import deleteImg from '../assets/delete.svg';
+import completeImg from '../assets/check-circle.svg'
 
 function render($container) {
     // Create compose button

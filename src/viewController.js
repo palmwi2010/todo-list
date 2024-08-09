@@ -1,5 +1,5 @@
-import {makeCard} from './card.js'
-import { updateScreen, exportTask } from './screen.js';
+import {makeCard} from './components/card.js'
+import { updateScreen, exportTask } from './components/screen.js';
 
 class ViewController {
 
