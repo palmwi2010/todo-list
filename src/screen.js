@@ -1,63 +1,60 @@
 import {createElement} from './utils.js';
+import dateImg from './assets/calendar-month.svg';
+import categoryImg from './assets/rhombus.svg';
+import categories from './assets/categories.json'
 
-class Screen {
+let $header = createElement({'type': 'h1', 'elemClass': 'screen-header'});
 
-    constructor() {
-        this.$container = createElement({'type': 'div', 'id': 'screen'});
-        this.$header = createElement({'type': 'h1', 'elemClass': 'screen-header'});
-        this.$date = createElement({'type': 'p', 'elemClass': 'screen-date'});
-        
-        this.$category = createElement({'type': 'p', 'elemClass': 'screen-category',});
-        this.$description = createElement({'type': 'p', 'elemClass': 'screen-description'});
+// Date row
+let $dateRow = createElement({'type': 'div', 'elemClass': 'screen-date-row'})
+let $datePicker = createElement({'type': 'input', 'id':'date-picker'});
+$datePicker.type = 'date';
+let $dateLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'date-label', 'elemText': "Due date:"});
+$dateLabel.for = 'date-picker';
+$dateRow.appendChild($dateLabel)
+$dateRow.appendChild($datePicker);
+$datePicker.addEventListener('click', e => $datePicker.showPicker());
 
-        this.$container.appendChild(this.$header);
-        this.$container.appendChild(this.$date);
-        this.$container.appendChild(this.$category);
-        this.$container.appendChild(this.$description);
-    }
+// Category row
+let $categoryRow = createElement({'type': 'div', 'elemClass': 'screen-category-row'})
+let $categoryImg = createElement({'type': 'img', 'elemClass': 'screen-icon'});
+$categoryImg.src = categoryImg;
+let $categoryPicker = createElement({'type': 'select', 'id': 'category-picker'});
+categories.forEach(element => {
+    let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': element.category});
+    opt.value = element.category;
+    $categoryPicker.appendChild(opt);
+});
+let $catLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'cat-label', 'elemText': "Category:"});
+$catLabel.for = 'category-picker';
 
-    updateScreen(task) {
-        this.$header.textContent = task.title;
-        this.$date.textContent = task.date;
-        this.$category.textContent = task.category;
-        this.$description.textContent = task.description;
-        return this.$container;
-    }
-}
+$categoryPicker.addEventListener('change', e => {
+    $categoryImg.id = `cat-${e.target.value.toLowerCase()}`;
+})
 
-function initializeScreen() {
+$categoryRow.appendChild($catLabel);
+$categoryRow.appendChild($categoryPicker);
+$categoryRow.appendChild($categoryImg);
 
-    let $container = createElement({'type': 'div', 'id': 'screen'});
 
-    let $header = createElement({'type': 'h1', 'elemClass': 'screen-header'});
-    let $date = createElement({'type': 'p', 'elemClass': 'screen-date'});    
-    let $category = createElement({'type': 'p', 'elemClass': 'screen-category'});
-    let $description = createElement({'type': 'p', 'elemClass': 'screen-description'});
+//let $category = createElement({'type': 'p', 'elemClass': 'screen-category'});
+let $description = createElement({'type': 'textarea', 'elemClass': 'screen-description'});
 
+function render($container) {
     $container.appendChild($header);
-    $container.appendChild($date);
-    $container.appendChild($category);
+    $container.appendChild($dateRow);
+    $container.appendChild($categoryRow);
     $container.appendChild($description);
-
-    return $container
 }
 
 function updateScreen(task) {
+    $header.textContent = task.title;
+    $datePicker.value = task.date;
 
-    let $container = createElement({'type': 'div', 'id': 'screen'});
-
-    let $header = createElement({'type': 'h1', 'elemClass': 'screen-header', 'elemText': task.title});
-    let $date = createElement({'type': 'p', 'elemClass': 'screen-date', 'elemText': task.date});
-    
-    let $category = createElement({'type': 'p', 'elemClass': 'screen-category', 'elemText': task.category});
-    let $description = createElement({'type': 'p', 'elemClass': 'screen-description', 'elemText': task.description});
-
-    $container.appendChild($header);
-    $container.appendChild($date);
-    $container.appendChild($category);
-    $container.appendChild($description);
-
-    return $container
+    let catId = `cat-${task.category.toLowerCase()}`;
+    $categoryImg.id = catId;
+    $categoryPicker.value = task.category;
+    $description.value = task.description;
 }
 
-export {initializeScreen, updateScreen}
+export {render, updateScreen}

@@ -11,34 +11,18 @@ class ViewController {
         let $activeDiv = document.querySelector('#active-card');
         let index = $activeDiv.dataset.attribute;
         let item = this.items[index];
-
-        let $header = document.querySelector('.screen-header')
-        let $date = document.querySelector('.screen-date')
-        let $category = document.querySelector('.screen-category')
-        let $description = document.querySelector('.screen-description')
-
-        $header.textContent = item.title;
-        $date.textContent = item.date;
-        $category.textContent = item.category;
-        $description.textContent = item.description;
+        updateScreen(item);
     }
 
     setActive(e) {
-        
+        // Set the active card based on the click from a user
         let $currentActive = document.querySelector('#active-card');
         let $selectedDiv = e.target;
 
-        console.log($selectedDiv.dataset.atribute);
-
-        while (!$selectedDiv.dataset.attribute) {
-            console.log('here');
-            $selectedDiv = $selectedDiv.parentElement;
-        }
-
-        if ($currentActive != e.target) {
-            $currentActive.id = '';
-            $selectedDiv.id = 'active-card';
-        }
+        // Get root div and set its id
+        while (!$selectedDiv.dataset.attribute) $selectedDiv = $selectedDiv.parentElement;
+        $currentActive.id = '';
+        $selectedDiv.id = 'active-card';
 
         this.updateMainScreen();
     }
