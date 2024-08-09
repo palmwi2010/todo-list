@@ -19,6 +19,9 @@
     --task-active: #fef3c7;
     --app-footer: #d4d4d4;
     --app-margin: 64px;
+    --high-priority: #dc2626;
+    --medium-priority: #f59e0b;
+    --low-priority: #22c55e;
 }
 
 /* Overall positioning */
@@ -173,6 +176,7 @@ body {
     grid-column: 1/-1;
     background-color: var(--app-footer);
     display: flex;
+    gap: 32px;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
@@ -182,6 +186,11 @@ body {
 
 .icon-btn {
     cursor: pointer;
+    width: 30px;
+}
+
+#complete-icon {
+    margin-left: auto;
 }
 
 /* Task card styling */
@@ -193,6 +202,8 @@ body {
 .task-card {
     padding: 16px;
     border-bottom: 1px solid var(--app-footer);
+    /* height: 120px; */
+    text-overflow: ellipsis;
 }
 
 #active-card {
@@ -211,10 +222,32 @@ body {
 
 .task-card > * {
     margin-bottom: 4px;
+    text-overflow: ellipsis;
+}
+
+/* .card-description {
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+} */
+
+.card-title {
+    font-size: 1.17em;
+    height: 1.17em;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
 }
 
 .card-description {
-    line-height: 1.3;
+    display: -webkit-box;        /* Necessary for multi-line ellipsis */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;       /* Number of lines before truncation */
+    line-clamp: 2;
+    overflow: hidden;            /* Hides the overflowing text */
+    text-overflow: ellipsis;     /* Adds the ellipsis (...) */
+    line-height: 1.3em;          /* Adjust line height */
 }
 
 
@@ -225,16 +258,22 @@ body {
 }
 
 .screen-header {
+    box-sizing: content-box;
     font-size: 30px;
+    font-family: 'Roboto';
+    outline: none;
+    border: none;
     border-bottom: 1px solid gray;
-    padding-bottom: 6px;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+    width: 100%;
+    height: 30px;
+    line-height: 1;
 }
 
 .screen-date {
     font-size: 20px;
     font-style: italic;
-
 }
 
 .screen-category {
@@ -248,7 +287,7 @@ body {
 
 .screen-date-row, .screen-category-row {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     align-items: center;
     padding-bottom: 8px;
     margin-bottom: 10px;
@@ -266,16 +305,43 @@ body {
     font-family: 'Roboto';
 }
 
+.priority-circle {
+    margin-left: auto;
+    border-radius: 50%;
+    background-color: none;
+    width: 30px;
+    height: 30px;
+    border:5px solid black;
+}
+
+.priority-circle:hover {
+    cursor: pointer;
+}
+
 .screen-label {
     font-size: 20px;
 }
 
-#category-picker {
+#screen-high-priority {
+    border-color: var(--high-priority);
+}
+#screen-medium-priority {
+    border-color: var(--medium-priority);
+}
+#screen-low-priority {
+    border-color: var(--low-priority);
+}
+
+.picker {
     border:none;
     outline: none;
     font-size: 20px;
     background-color: transparent;
     font-family: 'Roboto';
+}
+
+#priority-picker {
+    font-size: 18px;
 }
 
 .screen-description {

@@ -1,5 +1,6 @@
 import composeImg from './assets/plus-box.svg';
 import deleteImg from './assets/delete.svg';
+import completeImg from './assets/check-circle.svg'
 
 function render($container) {
     // Create compose button
@@ -10,6 +11,15 @@ function render($container) {
     img.src = composeImg;
     img.alt = "Compose task icon";
     img.title = "Create new task";
+    $container.appendChild(img);
+
+    img = new Image();
+    img.classList.add('icon');
+    img.classList.add('icon-btn');
+    img.id = 'complete-icon';
+    img.src = completeImg;
+    img.alt = "Complete task icon";
+    img.title = "Complete task";
     $container.appendChild(img);
 
     img = new Image();

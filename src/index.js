@@ -14,4 +14,5 @@ document.body.appendChild(renderMain());
 const viewController = new ViewController(todoItems);
 viewController.showCards();
 viewController.updateMainScreen();
+viewController.initButtons();
 

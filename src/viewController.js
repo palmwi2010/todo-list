@@ -1,5 +1,5 @@
 import {makeCard} from './card.js'
-import { updateScreen } from './screen.js';
+import { updateScreen, exportTask } from './screen.js';
 
 class ViewController {
 
@@ -7,10 +7,52 @@ class ViewController {
         this.items = items;
     }
 
+    initButtons() {
+        const newCardBtn = document.querySelector('#compose-icon');
+        const deleteCardBtn = document.querySelector('#delete-icon');
+        const taskListeners = document.querySelectorAll('.task-info');
+
+        newCardBtn.addEventListener('click', e=> {
+            let newItem = {
+                "title": "New task", 
+                "date": "2024-08-12", 
+                "priority": "low",
+                "description": "",
+                "category": "Other",
+                "completed": false
+            }
+            this.items.unshift(newItem);
+            this.resetScreen();
+        })
+
+        deleteCardBtn.addEventListener('click', e => {
+            let $activeDiv = document.querySelector('#active-card');
+            let index = $activeDiv.dataset.attribute;
+            this.items = this.items.filter((_, i) => i != index);
+            this.resetScreen();
+        })
+
+        taskListeners.forEach(element => {
+
+            let watch = (element.tagName === 'INPUT') ? 'change':'keyup';
+            element.addEventListener(watch, () => {
+                let newTask = exportTask();
+                this.updateActiveCard(newTask);
+            })
+        })
+    }
+
+    resetScreen() {
+        this.clearCards();
+        this.showCards();
+        this.updateMainScreen();
+    }
+
     updateMainScreen() {
         let $activeDiv = document.querySelector('#active-card');
         let index = $activeDiv.dataset.attribute;
         let item = this.items[index];
+        console.log(item);
         updateScreen(item);
     }
 
@@ -25,6 +67,11 @@ class ViewController {
         $selectedDiv.id = 'active-card';
 
         this.updateMainScreen();
+    }
+
+    clearCards() {
+        let $container = document.querySelector('.task-container');
+        $container.innerHTML = '';
     }
 
     showCards() {
@@ -43,6 +90,14 @@ class ViewController {
         }
     }
 
+    updateActiveCard(task) {
+        let $activeDiv = document.querySelector('#active-card');
+        let index = $activeDiv.dataset.attribute;
+        let $newCard = makeCard(task);
+        this.items[index] = task;
+        $activeDiv.innerHTML = $newCard.innerHTML;
+        this.updateMainScreen();
+    }
 }
 
 export {ViewController}
