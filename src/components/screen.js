@@ -78,6 +78,8 @@ function updateScreen(task) {
     $blank.style.display = task ? 'none':'block';
     if (!task) return;
 
+    console.log(task);
+
     $header.value = task.title;
 
     if (task.date) $datePicker.value = task.date;

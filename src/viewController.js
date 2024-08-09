@@ -14,23 +14,14 @@ class ViewController {
         const taskListeners = document.querySelectorAll('.task-info');
 
         newCardBtn.addEventListener('click', e=> {
-            let newItem = {
-                "title": "New task", 
-                "date": "2024-08-12", 
-                "priority": "low",
-                "description": "",
-                "category": "Other",
-                "completed": false
-            }
-            this.items.unshift(newItem);
-            TaskManager.addTask(newItem);
+            TaskManager.createTask();
             this.resetScreen();
         })
 
         deleteCardBtn.addEventListener('click', e => {
             let $activeDiv = document.querySelector('#active-card');
             let index = $activeDiv.dataset.attribute;
-            this.items = this.items.filter((_, i) => i != index);
+            TaskManager.deleteTask(index);
             this.resetScreen();
         })
 
@@ -38,7 +29,10 @@ class ViewController {
 
             let watch = (element.tagName === 'INPUT') ? 'change':'keyup';
             element.addEventListener(watch, () => {
+                let $activeDiv = document.querySelector('#active-card');
+                let index = $activeDiv.dataset.attribute;
                 let newTask = exportTask();
+                TaskManager.updateTask(index, newTask);
                 this.updateActiveCard(newTask);
             })
         })
@@ -52,10 +46,12 @@ class ViewController {
 
     updateMainScreen() {
         let $activeDiv = document.querySelector('#active-card');
+        console.log(`Active div is ${$activeDiv}`);
         let item = null;
         if ($activeDiv) {
             let index = $activeDiv.dataset.attribute;
-            item = this.items[index];
+            item = TaskManager.getTaskById(index);
+            console.log('here')
         }
 
         updateScreen(item);
@@ -83,23 +79,24 @@ class ViewController {
 
         let $container = document.querySelector('.task-container');
         let $currentActive = document.querySelector('#active-card');
+        let items = TaskManager.tasks;
 
-        for (let i = 0; i < this.items.length; i ++) {
-            let item = makeCard(this.items[i]);
-            item.setAttribute('data-attribute', i);
+        for (let i = 0; i < items.length; i ++) {
+            let $item = makeCard(items[i]);
+            $item.setAttribute('data-attribute', items[i].id);
             if (i === 0 && !$currentActive) {
-                item.id = 'active-card';
+                $item.id = 'active-card';
             }
-            item.addEventListener('click', e => this.setActive(e));
-            $container.appendChild(item);
+            $item.addEventListener('click', e => this.setActive(e));
+            $container.appendChild($item);
         }
     }
 
-    updateActiveCard(task) {
+    updateActiveCard() {
         let $activeDiv = document.querySelector('#active-card');
         let index = $activeDiv.dataset.attribute;
-        let $newCard = makeCard(task);
-        this.items[index] = task;
+
+        let $newCard = makeCard(TaskManager.getTaskById(index));
         $activeDiv.innerHTML = $newCard.innerHTML;
         this.updateMainScreen();
     }
