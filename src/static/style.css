@@ -255,6 +255,7 @@ body {
 #screen {
     background-color: white;
     padding: 24px;
+    position: relative;
 }
 
 .screen-header {
@@ -296,6 +297,17 @@ body {
 
 .screen-icon {
     width: 24px;
+}
+
+#blank-screen {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 5;
+    position: absolute;
+    top:0;
+    left:0;
+    display: none;
 }
 
 #date-picker {

@@ -1,5 +1,6 @@
 import {makeCard} from './components/card.js'
 import { updateScreen, exportTask } from './components/screen.js';
+import { TaskManager } from './task-manager.js';
 
 class ViewController {
 
@@ -22,6 +23,7 @@ class ViewController {
                 "completed": false
             }
             this.items.unshift(newItem);
+            TaskManager.addTask(newItem);
             this.resetScreen();
         })
 
@@ -50,9 +52,12 @@ class ViewController {
 
     updateMainScreen() {
         let $activeDiv = document.querySelector('#active-card');
-        let index = $activeDiv.dataset.attribute;
-        let item = this.items[index];
-        console.log(item);
+        let item = null;
+        if ($activeDiv) {
+            let index = $activeDiv.dataset.attribute;
+            item = this.items[index];
+        }
+
         updateScreen(item);
     }
 

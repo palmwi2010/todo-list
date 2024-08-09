@@ -15,4 +15,3 @@ const viewController = new ViewController(tasks);
 viewController.showCards();
 viewController.updateMainScreen();
 viewController.initButtons();
-

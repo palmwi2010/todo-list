@@ -1,7 +1,8 @@
 import {createElement} from '../utils.js';
 import categoryImg from '../assets/rhombus.svg';
-import categories from '../static/categories.json'
 import { capitalizeFirstLetter } from '../utils.js';
+
+let $blank = createElement({'type': 'div', 'id': 'blank-screen'});
 
 let $header = createElement({'type': 'textarea', 'elemClass': 'screen-header'});
 $header.classList.add('task-info');
@@ -40,12 +41,10 @@ let $categoryRow = createElement({'type': 'div', 'elemClass': 'screen-category-r
 let $categoryImg = createElement({'type': 'img', 'elemClass': 'screen-icon'});
 $categoryImg.src = categoryImg;
 let $categoryPicker = createElement({'type': 'select', 'elemClass':'picker', 'id': 'category-picker'});
-categories.forEach(element => {
-    let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': element.category});
-    opt.value = element.category;
-    $categoryPicker.appendChild(opt);
-});
-let $catLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'cat-label', 'elemText': "Category:"});
+let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': 'Default'});
+$categoryPicker.appendChild(opt);
+
+let $catLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'cat-label', 'elemText': "Project:"});
 $catLabel.for = 'category-picker';
 
 $categoryPicker.addEventListener('change', e => {
@@ -66,6 +65,7 @@ $header.addEventListener('change', e => {
 })
 
 function render($container) {
+    $container.appendChild($blank);
     $container.appendChild($header);
     $container.appendChild($dateRow);
     $container.appendChild($categoryRow);
@@ -73,15 +73,20 @@ function render($container) {
 }
 
 function updateScreen(task) {
+
+    // Cover if no task
+    $blank.style.display = task ? 'none':'block';
+    if (!task) return;
+
     $header.value = task.title;
 
     if (task.date) $datePicker.value = task.date;
 
-    let catId = `cat-${task.category.toLowerCase()}`;
+    let catId = `cat-${task.project.toLowerCase()}`;
     $priorityPicker.value = `${capitalizeFirstLetter(task.priority)} priority`;
     $priorityCircle.id = `screen-${task.priority}-priority`;
     $categoryImg.id = catId;
-    $categoryPicker.value = task.category;
+    $categoryPicker.value = task.project;
     $description.value = task.description;
 }
 
@@ -94,7 +99,7 @@ function exportTask() {
             "date": $datePicker.value, 
             "priority": priority,
             "description": $description.value,
-            "category": $categoryPicker.value,
+            "project": $categoryPicker.value,
             "completed": false
     }
 
