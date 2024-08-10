@@ -52,13 +52,8 @@ function renderPriorities() {
 
 function renderCategories() {
     $categoryImg.src = categoryImg;
-    let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': 'Default'});
-    $categoryPicker.appendChild(opt);
     let $catLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'cat-label', 'elemText': "Project:"});
     $catLabel.htmlFor = 'category-picker';
-    $categoryPicker.addEventListener('change', e => {
-        $categoryImg.id = `cat-${e.target.value.toLowerCase()}`;
-    })
     $categoryRow.appendChild($catLabel);
     $categoryRow.appendChild($categoryPicker);
     $categoryRow.appendChild($categoryImg);
@@ -102,7 +97,19 @@ function updateDescription(task) {
 }
 
 function updateProject(task) {
-    let catId = `cat-${task.project.toLowerCase()}`;
+    // Update picker with any new projects
+    $categoryPicker.innerHTML = '';
+    const projects = TaskManager.projects;
+
+    console.log($categoryPicker.classList);
+
+    projects.forEach(project => {
+        let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': project});
+        $categoryPicker.appendChild(opt);
+    })
+
+    // Set id to update image
+    let catId = `cat-${TaskManager.findProjectIndex(task.project)}`;
     $categoryImg.id = catId;
     $categoryPicker.value = task.project;
 }

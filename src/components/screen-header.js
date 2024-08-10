@@ -1,40 +1,29 @@
 import composeImg from '../assets/plus-box.svg';
 import deleteImg from '../assets/delete.svg';
 import completeImg from '../assets/check-circle.svg'
+import {createElement} from '../utils.js';
 import { TaskManager } from '../task-manager';
 
 function render($container) {
-    // Create compose button
-    let img = new Image();
-    img.classList.add('icon');
-    img.classList.add('icon-btn');
-    img.id = 'compose-icon';
-    img.src = composeImg;
-    img.alt = "Compose task icon";
-    img.title = "Create new task";
-    $container.appendChild(img);
-    img.addEventListener('click', e=> TaskManager.createTask());
 
-    // Complete button
-    img = new Image();
-    img.classList.add('icon');
-    img.classList.add('icon-btn');
-    img.id = 'complete-icon';
-    img.src = completeImg;
-    img.alt = "Complete task icon";
-    img.title = "Complete task";
-    $container.appendChild(img);
+    const buttons = [
+        {'type': 'compose', 'src': composeImg, 'onclick': TaskManager.createTask.bind(TaskManager)}, 
+        {'type': 'complete', 'src': completeImg},
+        {'type': 'delete', 'src': deleteImg, 'onclick': TaskManager.deleteTask.bind(TaskManager)}, 
+    ]
 
-    // Delete button
-    img = new Image();
-    img.classList.add('icon');
-    img.classList.add('icon-btn');
-    img.id = 'delete-icon';
-    img.src = deleteImg;
-    img.alt = "Delete task icon";
-    img.title = "Delete task";
-    $container.appendChild(img);
-    img.addEventListener('click', e => TaskManager.deleteTask());
+    buttons.forEach(btn => {
+        let btnType = btn.type;
+        let btnUpper = btnType[0].toUpperCase() + btnType.slice(1);
+
+        let $img = createElement({'type': 'img', 'elemClass': 'icon', 'id': `${btnType}-icon`});
+        $img.classList.add('icon-btn');
+        $img.src = btn.src;
+        $img.alt = `${btnUpper} task icon`;
+        $img.title = `${btnUpper} new task}`;
+        if (btn.onclick) $img.addEventListener('click', e => btn.onclick());
+        $container.appendChild($img);
+    })
 }
 
 export {render};

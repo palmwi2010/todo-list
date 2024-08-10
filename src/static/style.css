@@ -75,7 +75,6 @@ body {
     margin-top: 60px;
     display: flex;
     flex-direction: column;
-    gap:4px
 }
 
 .menu-header {
@@ -91,8 +90,25 @@ body {
     width: fit-content;
 }
 
+.submenu-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 4px 8px 8px 8px;
+    border-radius: 25px;
+    width: fit-content;
+}
+
 .icon {
     width: 22px;
+}
+
+.icon-small {
+    width: 18px;
+}
+
+.icon:hover, .icon-small:hover {
+    cursor: pointer;
 }
 
 .menu-label {
@@ -100,14 +116,57 @@ body {
     color: var(--sidebar-text);
 }
 
-.menu-item:hover {
+.menu-container {
+    width:120px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.submenu-label {
+    font-size: 18px;
+    color: var(--sidebar-text);
+    display: inline-block;
+}
+
+.menu-item:hover, .submenu-label:hover {
     font-weight: 700;
     cursor: pointer;
+}
+
+.project-menu {
+    box-sizing: content-box;
+    display: flex;
+    padding: 4px 8px;
+    gap:8px;
+    background-color: var(--sidebar-active);
+    border-radius: 10px;
+}
+
+#project-menu-header:hover {
+    cursor: alias;
+    font-weight: 400;
+}
+
+#project-container {
+    display: none;
+}
+
+#project-input {
+    font-size: 16px;
+    width:120px;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
 
 #active-menu {
     font-weight: 700;
     background-color: var(--sidebar-active);
+}
+
+.delete-icon:hover {
+    cursor: pointer;
 }
 
 /* Top banner */
@@ -368,18 +427,18 @@ body {
 
 
 /* Filters for category icon */
-#cat-sport {
+.cat-1, #cat-1 {
     filter: brightness(0) saturate(100%) invert(24%) sepia(48%) saturate(2891%) hue-rotate(345deg) brightness(111%) contrast(94%);
 }
 
-#cat-admin {
+.cat-2, #cat-2 {
     filter: brightness(0) saturate(100%) invert(44%) sepia(93%) saturate(402%) hue-rotate(43deg) brightness(103%) contrast(98%);
 }
 
-#cat-work {
+.cat-3, #cat-3 {
     filter: brightness(0) saturate(100%) invert(35%) sepia(64%) saturate(6313%) hue-rotate(175deg) brightness(84%) contrast(89%);
 }
 
-#cat-other {
+.cat-4, #cat-4 {
     filter: brightness(0) saturate(100%) invert(23%) sepia(5%) saturate(2941%) hue-rotate(178deg) brightness(88%) contrast(86%);
 }

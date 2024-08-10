@@ -7,8 +7,4 @@ function createElement({type, id = null, elemClass = null, elemText = null}) {
     return newElement;
 }
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-export {createElement, capitalizeFirstLetter};
+export {createElement};

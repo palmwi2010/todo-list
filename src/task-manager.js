@@ -3,7 +3,7 @@ import tasks from './static/defaultTasks.json';
 class TaskManager {
 
     static _tasks = tasks;
-    static _projects = ['default'];
+    static _projects = ['Default'];
     static _listeners = [];
     static _activeId;
 
@@ -12,6 +12,7 @@ class TaskManager {
         this.notifyListeners();
     }
 
+    // Getters and setters
     static get tasks() {
         return this._tasks;
     }
@@ -30,10 +31,16 @@ class TaskManager {
         this.notifyListeners();
     }
 
+    static get projects() {
+        return this._projects;
+    }
+
+    // Listeners
     static addListener(listener) {
         this._listeners.push(listener);
     }
 
+    // Task manipulation
     static notifyListeners() {
         this._listeners.forEach(listener => listener());
     }
@@ -70,26 +77,13 @@ class TaskManager {
 
     static deleteTask(id) {
         let deleteId = id ? id:this.activeId;
+        console.log(deleteId);
         this.tasks = this.tasks.filter(item => item.id != deleteId);
         this.notifyListeners();
         this.resetActiveIndex();
     }
 
-    static updateTask(task) {
-        let item = this._tasks.find(obj => obj.id == this.activeId);
-        if (item) {
-            item.title = task.title;
-            item.date = task.date;
-            item.priority = task.priority;
-            item.description = task.description;
-            item.project = task.project;
-            item.completed = task.completed;
-        }
-        this.notifyListeners();
-    }
-
     static updateCard({title, date, priority, project, description}) {
-
         if (title) this.getTask().title = title;
         if (date) this.getTask().date = date;
         if (priority) this.getTask().priority = priority;
@@ -98,30 +92,27 @@ class TaskManager {
         this.notifyListeners();
     }
 
-    static updateTitle(title) {
-        this.getTask().title = title;
+    // Project manipulation
+    static addProject(title) {
+        if (this._projects.includes(title)) return;
+        this._projects.push(title);
         this.notifyListeners();
     }
 
-    static updateDate(date) {
-        this.getTask().date = date;
+    static removeProject(title) {
+
+        // Set any tasks with that project to Default
+        this._tasks = this._tasks.map(task => {
+            if (task.project === title) task.project = 'Default';
+            return task;
+        })
+        this._projects = this._projects.filter(x => x!=title);
         this.notifyListeners();
     }
 
-    static updateProject(project) {
-        this.getTask().project = project;
-        this.notifyListeners();
+    static findProjectIndex(project) {
+        return this._projects.indexOf(project);
     }
-
-    static updatePriority(priority) {
-        let taskPriority = priority.toLowerCase().split(" ")[0];
-        this.getTask().priority = taskPriority;
-        this.notifyListeners();
-    }
-
-    static updateDescription
-
-    static update
 }
 
 export {TaskManager};
