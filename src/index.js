@@ -1,4 +1,5 @@
 import './static/style.css';
+import './static/slider.css';
 import {render as renderBanner} from './components/banner.js';
 import {render as renderSidebar} from './components/sidebar.js';
 import {render as renderMain} from './components/body.js';

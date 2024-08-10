@@ -77,7 +77,6 @@ class TaskManager {
 
     static deleteTask(id) {
         let deleteId = id ? id:this.activeId;
-        console.log(deleteId);
         this.tasks = this.tasks.filter(item => item.id != deleteId);
         this.notifyListeners();
         this.resetActiveIndex();
@@ -89,6 +88,11 @@ class TaskManager {
         if (priority) this.getTask().priority = priority;
         if (project) this.getTask().project = project;
         if (description) this.getTask().description = description;
+        this.notifyListeners();
+    }
+
+    static toggleComplete() {
+        this.getTask().completed = !this.getTask().completed;
         this.notifyListeners();
     }
 

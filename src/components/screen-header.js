@@ -8,7 +8,6 @@ function render($container) {
 
     const buttons = [
         {'type': 'compose', 'src': composeImg, 'onclick': TaskManager.createTask.bind(TaskManager)}, 
-        {'type': 'complete', 'src': completeImg},
         {'type': 'delete', 'src': deleteImg, 'onclick': TaskManager.deleteTask.bind(TaskManager)}, 
     ]
 

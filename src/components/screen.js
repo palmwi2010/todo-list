@@ -5,11 +5,12 @@ import { TaskManager } from '../task-manager.js';
 TaskManager.addListener(updateScreen);
 
 // Base elements
-let $blank = createElement({'type': 'div', 'id': 'blank-screen'});
+let $blank = createElement({'type': 'div', 'elemClass': 'placeholder-screen', 'elemText': 'Complete'});
 let $header = createElement({'type': 'textarea', 'elemClass': 'screen-header'});
 let $dateRow = createElement({'type': 'div', 'elemClass': 'screen-date-row'})
 let $categoryRow = createElement({'type': 'div', 'elemClass': 'screen-category-row'})
 let $description = createElement({'type': 'textarea', 'elemClass': 'screen-description'});
+let $complete = createElement({'type': 'div', 'elemClass': 'screen-complete'});
 
 let $datePicker = createElement({'type': 'input', 'id':'date-picker'});
 let $priorityPicker = createElement({'type': 'select', 'elemClass':'picker', 'id': 'priority-picker'});
@@ -67,12 +68,34 @@ function renderDescription() {
     $description.addEventListener('keyup', handleChange);
 }
 
+function renderComplete() {
+
+    let $completeLabel = createElement({'type': 'p', 'elemClass': 'complete-label', 'elemText': 'Complete'});
+    let $sliderDiv = createElement({'type': 'div', 'elemClass': 'toggle-div'});
+    let $sliderLabel = createElement({'type': 'label', 'elemClass': 'switch'});
+    let $sliderInput = createElement({'type': 'input', 'id': 'complete-slider'});
+    $sliderInput.type = 'checkbox';
+    let $sliderSpan = createElement({'type': 'span', 'elemClass': 'slider'});
+    $sliderSpan.classList.add('round');
+
+    // Add action
+    $sliderInput.addEventListener('click', () => TaskManager.toggleComplete());
+
+    $sliderLabel.appendChild($sliderInput);
+    $sliderLabel.appendChild($sliderSpan);
+    $sliderDiv.appendChild($sliderLabel);
+
+    $complete.appendChild($completeLabel);
+    $complete.appendChild($sliderDiv);
+}
+
 function renderComponents() {
     renderHeader();
     renderDate();
     renderPriorities();
     renderCategories();
     renderDescription();
+    renderComplete();
 }
 
 function render($container) {
@@ -82,6 +105,7 @@ function render($container) {
     $container.appendChild($dateRow);
     $container.appendChild($categoryRow);
     $container.appendChild($description);
+    $container.appendChild($complete);
 }
 
 function updateHeader(task) {
@@ -101,8 +125,6 @@ function updateProject(task) {
     $categoryPicker.innerHTML = '';
     const projects = TaskManager.projects;
 
-    console.log($categoryPicker.classList);
-
     projects.forEach(project => {
         let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': project});
         $categoryPicker.appendChild(opt);
@@ -120,13 +142,39 @@ function updatePriority(task) {
     $priorityPicker.value = task.priority;
 }
 
+function updateComplete(task) {
+    
+    const completeSlider = document.querySelector('#complete-slider');
+    
+    console.log(task.completed);
+
+    if (task.completed) {
+        console.log('we are checking');
+        completeSlider.checked = true;
+    } else {
+        completeSlider.checked = false;
+    }
+}
+
+function handlePlaceholder(task) {
+
+    // Cover if no task, shade if complete
+    if (!task) {
+        $blank.id = 'blank-screen';
+    } else if (task.completed) {
+        $blank.id = 'complete-screen';
+    } else {
+        $blank.id = '';
+    }
+}
+
 function updateScreen() {
 
     // Get active task
     let task = TaskManager.getTask();
 
-    // Cover if no task
-    $blank.style.display = task ? 'none':'block';
+    // Cover if no task, shade if complete
+    handlePlaceholder(task);
     if (!task) return;
 
     // Update fields
@@ -135,6 +183,7 @@ function updateScreen() {
     updateDescription(task);
     updateProject(task);
     updatePriority(task);
+    updateComplete(task);
 }
 
 export {render, updateScreen}
