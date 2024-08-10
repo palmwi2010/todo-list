@@ -86,7 +86,42 @@ class TaskManager {
             item.completed = task.completed;
         }
         this.notifyListeners();
-    } 
+    }
+
+    static updateCard({title, date, priority, project, description}) {
+
+        if (title) this.getTask().title = title;
+        if (date) this.getTask().date = date;
+        if (priority) this.getTask().priority = priority;
+        if (project) this.getTask().project = project;
+        if (description) this.getTask().description = description;
+        this.notifyListeners();
+    }
+
+    static updateTitle(title) {
+        this.getTask().title = title;
+        this.notifyListeners();
+    }
+
+    static updateDate(date) {
+        this.getTask().date = date;
+        this.notifyListeners();
+    }
+
+    static updateProject(project) {
+        this.getTask().project = project;
+        this.notifyListeners();
+    }
+
+    static updatePriority(priority) {
+        let taskPriority = priority.toLowerCase().split(" ")[0];
+        this.getTask().priority = taskPriority;
+        this.notifyListeners();
+    }
+
+    static updateDescription
+
+    static update
 }
 
 export {TaskManager};
