@@ -6,7 +6,7 @@
         "description": "Phone up my mortgage advisor Anthony and ask him to change my mortgage rate.",
         "project": "Default",
         "completed": false,
-        "id": 0
+        "id": 2
     },
     {
         "title": "Go for a 7.5k run", 
@@ -24,6 +24,6 @@
         "description": "Organise another house viewing to go and see the flat again with Mum and Daisy.",
         "project": "Default",
         "completed": false,
-        "id": 2
+        "id": 0
     }
 ]

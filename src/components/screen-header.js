@@ -1,6 +1,7 @@
 import composeImg from '../assets/plus-box.svg';
 import deleteImg from '../assets/delete.svg';
 import completeImg from '../assets/check-circle.svg'
+import { TaskManager } from '../task-manager';
 
 function render($container) {
     // Create compose button
@@ -12,7 +13,9 @@ function render($container) {
     img.alt = "Compose task icon";
     img.title = "Create new task";
     $container.appendChild(img);
+    img.addEventListener('click', e=> TaskManager.createTask());
 
+    // Complete button
     img = new Image();
     img.classList.add('icon');
     img.classList.add('icon-btn');
@@ -22,6 +25,7 @@ function render($container) {
     img.title = "Complete task";
     $container.appendChild(img);
 
+    // Delete button
     img = new Image();
     img.classList.add('icon');
     img.classList.add('icon-btn');
@@ -30,6 +34,7 @@ function render($container) {
     img.alt = "Delete task icon";
     img.title = "Delete task";
     $container.appendChild(img);
+    img.addEventListener('click', e => TaskManager.deleteTask());
 }
 
 export {render};

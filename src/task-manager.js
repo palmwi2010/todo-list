@@ -4,6 +4,13 @@ class TaskManager {
 
     static _tasks = tasks;
     static _projects = ['default'];
+    static _listeners = [];
+    static _activeId;
+
+    static init() {
+        this.resetActiveIndex();
+        this.notifyListeners();
+    }
 
     static get tasks() {
         return this._tasks;
@@ -11,6 +18,30 @@ class TaskManager {
 
     static set tasks(val) {
         this._tasks = val;
+        this.notifyListeners();
+    }
+
+    static get activeId() {
+        return this._activeId;
+    }
+
+    static set activeId(val) {
+        this._activeId = val;
+        this.notifyListeners();
+    }
+
+    static addListener(listener) {
+        this._listeners.push(listener);
+    }
+
+    static notifyListeners() {
+        this._listeners.forEach(listener => listener());
+    }
+
+    static resetActiveIndex() {
+        let ids = this._tasks.map(x => x.id);
+        let maxId = Math.max(...ids);
+        this.activeId = maxId;
     }
 
     static createTask() {
@@ -28,24 +59,24 @@ class TaskManager {
         }
 
         this._tasks.unshift(newItem);
+        this.resetActiveIndex();
+        this.notifyListeners();
     }
 
-    static getTaskById(id) {
-        console.log(id);
-        console.log(this._tasks);
-        return this._tasks.find(obj => obj.id == id);
-    }
-
-    static addTask(task) {
-        this._tasks.push(task);
+    static getTask(id) {
+        let getId = id ? id:this.activeId;
+        return this._tasks.find(obj => obj.id == getId);
     }
 
     static deleteTask(id) {
-        this.tasks = this.tasks.filter(item => item.id != id);
+        let deleteId = id ? id:this.activeId;
+        this.tasks = this.tasks.filter(item => item.id != deleteId);
+        this.notifyListeners();
+        this.resetActiveIndex();
     }
 
-    static updateTask(id, task) {
-        let item = this._tasks.find(obj => obj.id == id);
+    static updateTask(task) {
+        let item = this._tasks.find(obj => obj.id == this.activeId);
         if (item) {
             item.title = task.title;
             item.date = task.date;
@@ -54,29 +85,8 @@ class TaskManager {
             item.project = task.project;
             item.completed = task.completed;
         }
+        this.notifyListeners();
     } 
 }
 
 export {TaskManager};
-
-/*class TaskManager {
-    constructor(tasks) {
-        if (tasks) {
-            this.tasks = tasks;
-        }
-        else {
-            this.tasks = [];
-        }
-        this.projects = ['Default'];
-    }
-
-    addTask(task) {
-        this.tasks.push(task);
-    }
-
-    addProject(project) {
-
-    }
-}
-
-export {TaskManager};*/
