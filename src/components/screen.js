@@ -17,7 +17,7 @@ let $dateRow = createElement({'type': 'div', 'elemClass': 'screen-date-row'})
 let $datePicker = createElement({'type': 'input', 'id':'date-picker'});
 $datePicker.type = 'date';
 let $dateLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'date-label', 'elemText': "Due date:"});
-$dateLabel.for = 'date-picker';
+$dateLabel.htmlFor = 'date-picker';
 $dateRow.appendChild($dateLabel)
 $dateRow.appendChild($datePicker);
 $datePicker.addEventListener('click', e => $datePicker.showPicker());
@@ -50,7 +50,7 @@ let $categoryPicker = createElement({'type': 'select', 'elemClass':'picker', 'id
 let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': 'Default'});
 $categoryPicker.appendChild(opt);
 let $catLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'cat-label', 'elemText': "Project:"});
-$catLabel.for = 'category-picker';
+$catLabel.htmlFor = 'category-picker';
 $categoryPicker.addEventListener('change', e => {
     $categoryImg.id = `cat-${e.target.value.toLowerCase()}`;
 })
