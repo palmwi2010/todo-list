@@ -35,8 +35,9 @@ function updateCards() {
         $container.innerHTML = '';
 
         // Create cards from task manager
-        TaskManager.tasks.forEach(item => {
+        TaskManager.tasksLive.forEach(item => {
 
+            console.log(item);
             // Create card
             let $item = makeCard(item);
             $item.setAttribute('data-attribute', item.id);

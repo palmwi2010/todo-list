@@ -140,7 +140,7 @@ body {
     display: flex;
     padding: 4px 8px;
     gap:8px;
-    background-color: var(--sidebar-active);
+    background-color: var(--task-active);
     border-radius: 10px;
 }
 
@@ -163,7 +163,6 @@ body {
 
 #active-menu {
     font-weight: 700;
-    background-color: var(--sidebar-active);
 }
 
 .delete-icon:hover {
@@ -391,7 +390,7 @@ body {
     position: absolute;
     top:0;
     left:0;
-    transition-duration: 0.4s;
+    transition-duration: 0.3s;
     color:white;
     text-align: center;
     padding-top:200px;
@@ -400,16 +399,21 @@ body {
 #blank-screen {
     z-index: 10;
     opacity: 1;
+    transition-duration: 0s;
 }
 
 #complete-screen {
     background-color: var(--completed-shade);
-    opacity: 0.75;
+    opacity: 0.85;
     z-index: 5;
     font-size: 100px;
     font-weight: 300;
     text-shadow: 2px 2px black;
     text-transform: uppercase;
+}
+
+#complete-screen::after {
+    content: 'Complete';
 }
 
 #date-picker {

@@ -5,7 +5,7 @@ import { TaskManager } from '../task-manager.js';
 TaskManager.addListener(updateScreen);
 
 // Base elements
-let $blank = createElement({'type': 'div', 'elemClass': 'placeholder-screen', 'elemText': 'Complete'});
+let $blank = createElement({'type': 'div', 'elemClass': 'placeholder-screen'});
 let $header = createElement({'type': 'textarea', 'elemClass': 'screen-header'});
 let $dateRow = createElement({'type': 'div', 'elemClass': 'screen-date-row'})
 let $categoryRow = createElement({'type': 'div', 'elemClass': 'screen-category-row'})
@@ -146,10 +146,7 @@ function updateComplete(task) {
     
     const completeSlider = document.querySelector('#complete-slider');
     
-    console.log(task.completed);
-
     if (task.completed) {
-        console.log('we are checking');
         completeSlider.checked = true;
     } else {
         completeSlider.checked = false;

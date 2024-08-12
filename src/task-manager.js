@@ -1,15 +1,25 @@
 import tasks from './static/defaultTasks.json';
+import {FilterManager} from './filter-manager.js';
 
 class TaskManager {
 
     static _tasks = tasks;
+    static _tasksLive = tasks;
     static _projects = ['Default'];
     static _listeners = [];
     static _activeId;
+    static _activeMenu = 0;
+    static _nonProjectMenus;
+    static _activeProject;
+    static #_uniqueId = 100; // for generating task ids
+    static _filter = new FilterManager(this);
 
     static init() {
         this.resetActiveIndex();
-        this.notifyListeners();
+    }
+
+    static initFilter(filterClass) {
+        this._filter = filterClass
     }
 
     // Getters and setters
@@ -31,8 +41,52 @@ class TaskManager {
         this.notifyListeners();
     }
 
+    static get tasksLive() {
+        return this._tasksLive;
+    }
+
     static get projects() {
         return this._projects;
+    }
+
+    static set projects(val) {
+        this._projects = val;
+    }
+
+    static get activeMenu() {
+        return this._activeMenu;
+    }
+
+    static set activeMenu(val) {
+        this._activeMenu = val;
+        this.updateLiveTasks();
+        this.resetActiveIndex();
+        this.notifyListeners();
+    }
+
+    static get nonProjectMenus() {
+        return this._nonProjectMenus;
+    }
+
+    static set nonProjectMenus(val) {
+        this._nonProjectMenus = val;
+    }
+
+    static get activeProject() {
+        return this._activeProject;
+    }
+
+    static set activeProject(project) {
+        this.activeMenu = this.getMenuId(project);
+        this._activeProject = project;
+        this.resetActiveIndex();
+        this.notifyListeners();
+    }
+
+    static generateTaskId() {
+        let id = this.#_uniqueId;
+        this.#_uniqueId++;
+        return id;
     }
 
     // Listeners
@@ -42,18 +96,22 @@ class TaskManager {
 
     // Task manipulation
     static notifyListeners() {
+        this.updateLiveTasks();
         this._listeners.forEach(listener => listener());
     }
 
+    static updateLiveTasks() {
+        this._tasksLive = this._filter.applyFilter();
+    }
+
     static resetActiveIndex() {
-        let ids = this._tasks.map(x => x.id);
+        this.updateLiveTasks();
+        let ids = this._tasksLive.map(x => x.id);
         let maxId = Math.max(...ids);
         this.activeId = maxId;
     }
 
     static createTask() {
-        let ids = this._tasks.map(x => x.id);
-        let maxId = Math.max(...ids);
 
         let newItem = {
             "title": "New task", 
@@ -62,7 +120,7 @@ class TaskManager {
             "description": "",
             "project": "Other",
             "completed": false,
-            "id": maxId + 1
+            "id": this.generateTaskId()
         }
 
         this._tasks.unshift(newItem);
@@ -96,10 +154,15 @@ class TaskManager {
         this.notifyListeners();
     }
 
+    static getMenuId(project) {
+        return this.nonProjectMenus + this._projects.indexOf(project);
+    }
+
     // Project manipulation
     static addProject(title) {
         if (this._projects.includes(title)) return;
         this._projects.push(title);
+        this.activeMenu = this.getMenuId(title);
         this.notifyListeners();
     }
 
@@ -110,12 +173,27 @@ class TaskManager {
             if (task.project === title) task.project = 'Default';
             return task;
         })
+
+        // If it is the currently selected menu, decrement it
+        if (this.activeMenu === this.getMenuId(title)) {
+            this.activeMenu = this.activeMenu - 1;
+        }
+
+        // Remove and notify listeners
         this._projects = this._projects.filter(x => x!=title);
         this.notifyListeners();
     }
 
     static findProjectIndex(project) {
         return this._projects.indexOf(project);
+    }
+
+    static resetState() {
+        console.log('running');
+        this.projects = ['Default'];
+        this.tasks = [];
+        this.activeMenu = 0;
+        this.notifyListeners();
     }
 }
 
