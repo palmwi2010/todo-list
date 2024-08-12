@@ -23,6 +23,8 @@
     --high-priority: #dc2626;
     --medium-priority: #f59e0b;
     --low-priority: #22c55e;
+    --sort-active: #475569;
+    --overdue-shade: #fecaca
 }
 
 /* Overall positioning */
@@ -231,24 +233,70 @@ body {
 
 /* Task card styling */
 
+.task-card {
+    z-index: 1;
+}
+
+.card-top-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.card-top-row > *:nth-child(2) {
+    margin-left: auto;
+}
+
 .app-footer {
     grid-column: 1/-1;
     background-color: var(--app-footer);
     display: flex;
     gap: 32px;
-    justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     box-shadow: 0 2px 6px 0 #a3a3a3;
     z-index: 12;
 }
 
-.icon-btn {
+.sort-div {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.sort-label {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.sort-btn {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 100;
+    background-color: lightgray;
+    padding: 4px 8px;
+}
+
+.sort-btn:hover {
     cursor: pointer;
+}
+
+.sort-active {
+    background-color: var(--sort-active);
+    color: white;
+}
+
+.sort-active:hover {
+    cursor: alias;
+}
+
+.icon-btn {
     width: 30px;
 }
 
-#complete-icon {
+.icon-btn:last-child {
     margin-left: auto;
 }
 
@@ -432,6 +480,14 @@ body {
     border:5px solid black;
 }
 
+.priority-circle-small {
+    border-radius: 50%;
+    background-color: none;
+    width: 20px;
+    height: 20px;
+    border:3px solid black;
+}
+
 .priority-circle:hover {
     cursor: pointer;
 }
@@ -472,6 +528,9 @@ body {
     font-size: 18px;
 }
 
+.overdue, .overdue:hover {
+    background-color: var(--overdue-shade);
+}
 
 /* Filters for category icon */
 .cat-1, #cat-1 {
@@ -488,4 +547,8 @@ body {
 
 .cat-4, #cat-4 {
     filter: brightness(0) saturate(100%) invert(23%) sepia(5%) saturate(2941%) hue-rotate(178deg) brightness(88%) contrast(86%);
+}
+
+#cat-0:hover, #cat-1:hover, #cat2:hover, #cat3:hover, #cat4:hover {
+    cursor: alias;
 }

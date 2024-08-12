@@ -1,5 +1,6 @@
 import tasks from './static/defaultTasks.json';
 import {FilterManager} from './filter-manager.js';
+import { getTodayDate } from './utils.js';
 
 class TaskManager {
 
@@ -13,6 +14,7 @@ class TaskManager {
     static _activeProject;
     static #_uniqueId = 100; // for generating task ids
     static _filter = new FilterManager(this);
+    static _sortId = true;
 
     static init() {
         this.notifyListeners();
@@ -29,7 +31,6 @@ class TaskManager {
 
     static set tasks(val) {
         this._tasks = val;
-        //this.notifyListeners();
     }
 
     static get activeId() {
@@ -79,6 +80,10 @@ class TaskManager {
         this.notifyListeners();
     }
 
+    static get sortId() {
+        return this._sortId;
+    }
+
     static generateTaskId() {
         let id = this.#_uniqueId;
         this.#_uniqueId++;
@@ -104,6 +109,7 @@ class TaskManager {
 
     static updateLiveTasks() {
         this._tasksLive = this._filter.applyFilter();
+        this._tasksLive = this._filter.sortTasks();
     }
 
     static checkValidIndex() {
@@ -134,10 +140,11 @@ class TaskManager {
 
         // If it's in high priority, keep high priority
         let newPriority = this.activeMenu == 1 ? 'High priority': '';
+        let newDate = getTodayDate();
 
         let newItem = {
             "title": "New task", 
-            "date": "2024-08-12", 
+            "date": newDate, 
             "priority": newPriority,
             "description": "",
             "project": newProject,
@@ -212,6 +219,11 @@ class TaskManager {
 
     static findProjectIndex(project) {
         return this._projects.indexOf(project);
+    }
+
+    static toggleSort() {
+        this._sortId = !this._sortId;
+        this.notifyListeners();
     }
 
     static resetState() {

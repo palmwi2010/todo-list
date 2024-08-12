@@ -1,3 +1,5 @@
+import { compareAsc } from "date-fns";
+
 class FilterManager {
 
     constructor(taskManager) {
@@ -56,6 +58,53 @@ class FilterManager {
         let tasks = this.taskManager.tasks;
         let project = this.taskManager.activeProject;
         return tasks.filter(task => task.project === project);
+    }
+
+    idDescending(taskA, taskB) {
+        return taskB.id - taskA.id;
+    }
+
+    idAscending(taskA, taskB) {
+        return taskA.id - taskB.id;
+    }
+
+    dateAscending(taskA, taskB) {
+        return compareAsc(taskA.date, taskB.date);
+    }
+
+    dateDescending(taskA, taskB) {
+        return compareAsc(taskB.date, taskA.date);
+    }
+
+    getCompareFunc(mode) {
+        switch (mode) {
+            case 'idAscending':
+                return this.idAscending;
+            case 'idDescending':
+                return this.idDescending;
+            case 'dateDescending':
+                return this.dateDescending;
+            case 'dateAscending':
+                return this.dateAscending;
+        } 
+    }
+
+    sortTasks() {
+        // Initalize
+        let tasks = this.taskManager.tasksLive;
+
+        let compareFunc;
+
+        if (this.taskManager.sortId) {
+            compareFunc = this.idDescending;
+        } else {
+            compareFunc = this.dateAscending;
+        }
+
+        // Sort
+        tasks = tasks.sort(compareFunc);
+
+        return tasks;
     }
 }
 
