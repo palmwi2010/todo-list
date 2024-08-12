@@ -178,7 +178,6 @@ function render() {
         } else {
             $item.addEventListener('click', e => TaskManager.activeMenu = e.currentTarget.dataset.menu);
         }
-            
         $menu.appendChild($item);
     }
 
@@ -197,9 +196,7 @@ function render() {
     menuItems[1].forEach(item => {
         let $item = createSidebarItem(item);
         if (item.reset) {
-            console.log('here');
             $item.addEventListener('click', () => TaskManager.resetState());
-            console.log($item);
         }
         $menu.appendChild($item)
     });

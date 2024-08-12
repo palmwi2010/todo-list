@@ -15,7 +15,7 @@ class TaskManager {
     static _filter = new FilterManager(this);
 
     static init() {
-        this.resetActiveIndex();
+        this.notifyListeners();
     }
 
     static initFilter(filterClass) {
@@ -29,7 +29,7 @@ class TaskManager {
 
     static set tasks(val) {
         this._tasks = val;
-        this.notifyListeners();
+        //this.notifyListeners();
     }
 
     static get activeId() {
@@ -38,7 +38,6 @@ class TaskManager {
 
     static set activeId(val) {
         this._activeId = val;
-        this.notifyListeners();
     }
 
     static get tasksLive() {
@@ -59,8 +58,6 @@ class TaskManager {
 
     static set activeMenu(val) {
         this._activeMenu = val;
-        this.updateLiveTasks();
-        this.resetActiveIndex();
         this.notifyListeners();
     }
 
@@ -79,7 +76,6 @@ class TaskManager {
     static set activeProject(project) {
         this.activeMenu = this.getMenuId(project);
         this._activeProject = project;
-        this.resetActiveIndex();
         this.notifyListeners();
     }
 
@@ -96,7 +92,13 @@ class TaskManager {
 
     // Task manipulation
     static notifyListeners() {
+        // Update the live tasks based on any filters
         this.updateLiveTasks();
+
+        // Check that the active id is in there, otherwise reset it
+        if (!this.checkValidIndex()) this.resetActiveIndex();
+
+        // Run listeners
         this._listeners.forEach(listener => listener());
     }
 
@@ -104,8 +106,18 @@ class TaskManager {
         this._tasksLive = this._filter.applyFilter();
     }
 
+    static checkValidIndex() {
+        // Check active index is in view
+        let taskIds = this._tasksLive.map(task => task.id);
+        if (taskIds.includes(this.activeId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     static resetActiveIndex() {
-        this.updateLiveTasks();
+        console.log('resetting');
         let ids = this._tasksLive.map(x => x.id);
         let maxId = Math.max(...ids);
         this.activeId = maxId;
@@ -124,7 +136,7 @@ class TaskManager {
         }
 
         this._tasks.unshift(newItem);
-        this.resetActiveIndex();
+        this.activeId = newItem.id;
         this.notifyListeners();
     }
 
@@ -137,7 +149,6 @@ class TaskManager {
         let deleteId = id ? id:this.activeId;
         this.tasks = this.tasks.filter(item => item.id != deleteId);
         this.notifyListeners();
-        this.resetActiveIndex();
     }
 
     static updateCard({title, date, priority, project, description}) {
@@ -158,11 +169,16 @@ class TaskManager {
         return this.nonProjectMenus + this._projects.indexOf(project);
     }
 
+    static updateActiveId(val) {
+        this._activeId = val;
+        this.notifyListeners();
+    }
+
     // Project manipulation
     static addProject(title) {
         if (this._projects.includes(title)) return;
         this._projects.push(title);
-        this.activeMenu = this.getMenuId(title);
+        this.activeProject = title;
         this.notifyListeners();
     }
 
@@ -189,7 +205,6 @@ class TaskManager {
     }
 
     static resetState() {
-        console.log('running');
         this.projects = ['Default'];
         this.tasks = [];
         this.activeMenu = 0;

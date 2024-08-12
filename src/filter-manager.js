@@ -9,10 +9,7 @@ class FilterManager {
         }
     }
 
-
-
     getMenuMapping(menuId) {
-
         if (menuId in this.menuMapping) {
             return this.menuMapping[menuId]
         } else {
@@ -21,7 +18,6 @@ class FilterManager {
     }
 
     applyFilter() {
-
         let menuId = this.taskManager.activeMenu;
         let mode = this.getMenuMapping(menuId);
 

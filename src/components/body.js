@@ -37,7 +37,6 @@ function updateCards() {
         // Create cards from task manager
         TaskManager.tasksLive.forEach(item => {
 
-            console.log(item);
             // Create card
             let $item = makeCard(item);
             $item.setAttribute('data-attribute', item.id);
@@ -49,7 +48,7 @@ function updateCards() {
             $item.addEventListener('click', e => {
                 document.querySelector('#active-card').id = '';
                 $item.id = 'active-card';
-                TaskManager.activeId = item.id;
+                TaskManager.updateActiveId(item.id);
             });
             $container.appendChild($item);
     });
