@@ -117,7 +117,6 @@ class TaskManager {
     }
 
     static resetActiveIndex() {
-        console.log('resetting');
         let ids = this._tasksLive.map(x => x.id);
         let maxId = Math.max(...ids);
         this.activeId = maxId;
@@ -125,12 +124,23 @@ class TaskManager {
 
     static createTask() {
 
+        // Reset active menu to home unless in a project
+        if (this.activeMenu == 2) {
+            this.activeMenu = 0;
+        }
+
+        // If it's in a project, set the new task to have the project category type
+        let newProject = this.activeMenu > 3 ? this.activeProject:'Default';
+
+        // If it's in high priority, keep high priority
+        let newPriority = this.activeMenu == 1 ? 'High priority': '';
+
         let newItem = {
             "title": "New task", 
             "date": "2024-08-12", 
-            "priority": "low",
+            "priority": newPriority,
             "description": "",
-            "project": "Other",
+            "project": newProject,
             "completed": false,
             "id": this.generateTaskId()
         }
