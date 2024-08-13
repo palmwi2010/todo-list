@@ -1,6 +1,6 @@
 import tasks from "./static/defaultTasks.json";
-import {FilterManager} from "./filter-manager.js";
-import { getNextWeekDate, getRandomDate, getRandomPriority } from "./utils.js";
+import {FilterManager} from "./utils/filter-manager.js";
+import { getNextWeekDate, getRandomDate, getRandomPriority } from "./utils/utils.js";
 import { TaskStorage } from "./local-storage.js";
 
 class TaskManager {

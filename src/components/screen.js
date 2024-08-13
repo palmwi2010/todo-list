@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import {createElement} from '../utils/utils.js';
 import categoryImg from '../assets/rhombus.svg';
 import { TaskManager } from '../task-manager.js';
 

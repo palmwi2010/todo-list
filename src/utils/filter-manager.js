@@ -5,9 +5,9 @@ class FilterManager {
     constructor(taskManager) {
         this.taskManager = taskManager;
         this.menuMapping = {
-            0: 'Active',
-            1: 'High priority',
-            2: 'Completed',
+            0: "Active",
+            1: "High priority",
+            2: "Completed",
         }
     }
 
@@ -15,22 +15,22 @@ class FilterManager {
         if (menuId in this.menuMapping) {
             return this.menuMapping[menuId]
         } else {
-            return 'Project'; // Default is project if not one of the set menus
+            return "Project"; // Default is project if not one of the set menus
         }
     }
 
     applyFilter() {
-        let menuId = this.taskManager.activeMenu;
-        let mode = this.getMenuMapping(menuId);
+        const menuId = this.taskManager.activeMenu;
+        const mode = this.getMenuMapping(menuId);
 
         switch (mode) {
-            case 'Active':
+            case "Active":
                 return this.filterActive();
-            case 'High priority':
+            case "High priority":
                 return this.filterPriority();
-            case 'Completed':
+            case "Completed":
                 return this.filterCompleted();
-            case 'Project':
+            case "Project":
                 return this.filterProject();
             default:
                 console.log("Filter default triggered.");
@@ -40,23 +40,23 @@ class FilterManager {
     }
 
     filterActive() {
-        let tasks = this.taskManager.tasks;
+        const {tasks} = this.taskManager;
         return tasks.filter(task => !task.completed);
     }
 
     filterPriority() {
-        let tasks = this.taskManager.tasks;
-        return tasks.filter(task => task.priority === 'High priority' && !task.completed);
+        const {tasks} = this.taskManager;
+        return tasks.filter(task => task.priority === "High priority" && !task.completed);
     }
 
     filterCompleted() {
-        let tasks = this.taskManager.tasks;
+        const {tasks} = this.taskManager;
         return tasks.filter(task => task.completed);
     }
 
     filterProject() {
-        let tasks = this.taskManager.tasks;
-        let project = this.taskManager.activeProject;
+        const {tasks} = this.taskManager;
+        const project = this.taskManager.activeProject;
         return tasks.filter(task => task.project === project && !task.completed);
     }
 
@@ -78,13 +78,13 @@ class FilterManager {
 
     getCompareFunc(mode) {
         switch (mode) {
-            case 'idAscending':
+            case "idAscending":
                 return this.idAscending;
-            case 'idDescending':
+            case "idDescending":
                 return this.idDescending;
-            case 'dateDescending':
+            case "dateDescending":
                 return this.dateDescending;
-            case 'dateAscending':
+            case "dateAscending":
                 return this.dateAscending;
         } 
     }
