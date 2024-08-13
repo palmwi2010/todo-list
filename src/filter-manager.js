@@ -46,7 +46,7 @@ class FilterManager {
 
     filterPriority() {
         let tasks = this.taskManager.tasks;
-        return tasks.filter(task => task.priority === 'High priority');
+        return tasks.filter(task => task.priority === 'High priority' && !task.completed);
     }
 
     filterCompleted() {
@@ -57,7 +57,7 @@ class FilterManager {
     filterProject() {
         let tasks = this.taskManager.tasks;
         let project = this.taskManager.activeProject;
-        return tasks.filter(task => task.project === project);
+        return tasks.filter(task => task.project === project && !task.completed);
     }
 
     idDescending(taskA, taskB) {

@@ -1,6 +1,6 @@
 import tasks from './static/defaultTasks.json';
 import {FilterManager} from './filter-manager.js';
-import { getTodayDate } from './utils.js';
+import { getNextWeekDate, getTodayDate, getRandomDate, getRandomPriority } from './utils.js';
 
 class TaskManager {
 
@@ -17,6 +17,7 @@ class TaskManager {
     static _sortId = true;
 
     static init() {
+        this.tasks = this.generateDefaultTasks(3);
         this.notifyListeners();
     }
 
@@ -144,7 +145,7 @@ class TaskManager {
 
         let newItem = {
             "title": "New task", 
-            "date": newDate, 
+            "date": getNextWeekDate(), 
             "priority": newPriority,
             "description": "",
             "project": newProject,
@@ -224,6 +225,30 @@ class TaskManager {
     static toggleSort() {
         this._sortId = !this._sortId;
         this.notifyListeners();
+    }
+
+    static generateDefaultTasks(nTasks) {
+
+        // If it's in high priority, keep high priority
+        let tasks = [];
+        let baseDescription = `Feel free to click on a card and enter your own description here. If you want to start from fresh, click "Clear all tasks" in the left sidebar menu!`.trim()
+
+        for (let i = 0; i < nTasks; i++) {
+
+            let newItem = {
+                "title": `Task ${i + 1}`, 
+                "date": getRandomDate(), 
+                "priority": getRandomPriority(),
+                "description": baseDescription,
+                "project": 'Default',
+                "completed": false,
+                "id": this.generateTaskId()
+            }
+
+            tasks.push(newItem);
+        }
+
+        return tasks
     }
 
     static resetState() {
