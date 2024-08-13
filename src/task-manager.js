@@ -62,7 +62,7 @@ class TaskManager {
     }
 
     static set activeMenu(val) {
-        this._activeMenu = val;
+        this._activeMenu = val; 
         this.notifyListeners();
     }
 

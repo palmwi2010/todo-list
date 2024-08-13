@@ -432,18 +432,13 @@ body {
 
 .placeholder-screen {
     height: 100%;
-    width: 100%;
+    width: 0;
     /* background-color: white; */
-    z-index: -5;
-    opacity: 0;
+    z-index: 1;
+    opacity: 0.5;
     position: absolute;
     top:0;
     left:0;
-    transition-duration: 0.3s;
-    color:white;
-    text-align: center;
-    padding-top:200px;
-
     background: linear-gradient(135deg, var(--completed-shade), var(--completed-shade-right));
 }
 
@@ -453,7 +448,8 @@ body {
     transition-duration: 0s;
 }
 
-#complete-screen {
+
+#complete-screen, #complete-screen-already {
     /* background-color: var(--completed-shade-right); */
     /* background: linear-gradient(135deg, var(--completed-shade), var(--completed-shade-right)); */
     opacity: 0.5;
@@ -462,11 +458,15 @@ body {
     font-weight: 300;
     text-shadow: 2px 2px black;
     text-transform: uppercase;
+    width:100%;
+}
+
+#complete-screen {
     transition-duration: 0.3s;
 }
 
 #complete-screen ~ *:not(.screen-complete) {
-    /* filter: blur(2px); */
+    filter: blur(2px);
 }
 
 #complete-screen ~ .screen-description {

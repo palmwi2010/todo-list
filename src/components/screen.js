@@ -142,6 +142,14 @@ function updatePriority(task) {
     $priorityPicker.value = task.priority;
 }
 
+function checkCompletedScreen() {
+    if (TaskManager.activeMenu == 2) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function updateComplete(task) {
     
     const completeSlider = document.querySelector('#complete-slider');
@@ -159,7 +167,11 @@ function handlePlaceholder(task) {
     if (!task) {
         $blank.id = 'blank-screen';
     } else if (task.completed) {
-        $blank.id = 'complete-screen';
+        if (checkCompletedScreen()) {
+            $blank.id = 'complete-screen-already';
+        } else {
+            $blank.id = 'complete-screen';
+        }
     } else {
         $blank.id = '';
     }
