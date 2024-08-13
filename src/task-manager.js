@@ -197,7 +197,7 @@ class TaskManager {
         if (this._projects.includes(title)) return;
         this._projects.push(title);
         this.activeProject = title;
-        this.notifyListeners();
+        this.createTask();
     }
 
     static removeProject(title) {
