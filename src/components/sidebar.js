@@ -5,12 +5,12 @@ import completedImg from '../assets/check-circle.svg';
 import categoryImg from '../assets/folder.svg';
 import settingsImg from '../assets/cog.svg';
 import privacyImg from '../assets/book-alert.svg';
-import phoneImg from '../assets/phone.svg';
 import newImg from '../assets/plus-box.svg';
 import saveImg from '../assets/content-save-alert.svg';
 import deleteImg from '../assets/delete.svg';
 import projectImg from '../assets/rhombus.svg';
 import restartImg from '../assets/restart.svg';
+import cookieImg from '../assets/cookie.svg';
 import { TaskManager } from '../task-manager.js';
 
 TaskManager.addListener(updateSidebar);
@@ -25,8 +25,8 @@ const menuItems = [
     [
         {'name': 'Settings', 'img': settingsImg},
         {'name': 'Privacy policy', 'img': privacyImg},
-        {'name': 'Contact us', 'img': phoneImg},
-        {'name': 'Clear all tasks', 'img': restartImg, 'active': true, 'reset': true}
+        {'name': 'Clear all tasks', 'img': restartImg, 'active': true, 'reset': true},
+        {'name': 'Clear cache', 'img': cookieImg, 'active': true, 'clearcache': true}
     ]
 ]
 
@@ -197,6 +197,9 @@ function render() {
         let $item = createSidebarItem(item);
         if (item.reset) {
             $item.addEventListener('click', () => TaskManager.resetState());
+        }
+        else if (item.clearcache) {
+            $item.addEventListener('click', () => TaskManager.clearCache());
         }
         $menu.appendChild($item)
     });

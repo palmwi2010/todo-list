@@ -17,20 +17,20 @@ function formatDate(date) {
 function getTodayDate() {
 
     let date = new Date();
-    return format(date, 'y-MM-d');
+    return format(date, 'y-MM-dd');
 }
 
 function getNextWeekDate() {
 
     let date = add(new Date(), {days: 7});
-    return format(date, 'y-MM-d');
+    return format(date, 'y-MM-dd');
 }
 
 function getRandomDate() {
 
     let randDays = Math.ceil(Math.random() * 30);
     let date = add(new Date(), {days: randDays});
-    return format(date, 'y-MM-d');
+    return format(date, 'y-MM-dd');
 }
 
 function getRandomPriority() {
@@ -39,11 +39,6 @@ function getRandomPriority() {
     let randIndex = Math.floor(Math.random() * 3);
 
     return opts[randIndex]
-}
-
-function generateDescription() {
-    let string = 'Feel free to click on a card and enter your own description here. If you want to start from fresh, click "Clear all tasks" in the left sidebar menu!'
-    return 
 }
 
 export {createElement, formatDate, getTodayDate, getNextWeekDate, getRandomDate, getRandomPriority};

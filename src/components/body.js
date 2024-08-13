@@ -46,7 +46,9 @@ function updateCards() {
 
             // Make it active if it's clicked on
             $item.addEventListener('click', e => {
-                document.querySelector('#active-card').id = '';
+                
+                let activeCard = document.querySelector('#active-card');
+                if (activeCard) activeCard.id = '';
                 $item.id = 'active-card';
                 TaskManager.updateActiveId(item.id);
             });

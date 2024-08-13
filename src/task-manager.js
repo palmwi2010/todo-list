@@ -1,6 +1,7 @@
 import tasks from './static/defaultTasks.json';
 import {FilterManager} from './filter-manager.js';
 import { getNextWeekDate, getTodayDate, getRandomDate, getRandomPriority } from './utils.js';
+import { TaskStorage } from './local-storage.js';
 
 class TaskManager {
 
@@ -12,12 +13,14 @@ class TaskManager {
     static _activeMenu = 0;
     static _nonProjectMenus;
     static _activeProject;
-    static #_uniqueId = 100; // for generating task ids
     static _filter = new FilterManager(this);
+    static _storage = new TaskStorage(this);
     static _sortId = true;
 
     static init() {
-        this.tasks = this.generateDefaultTasks(3);
+        if (!this._storage.getStorage()) {
+            this.tasks = this.generateDefaultTasks(3);
+        }
         this.notifyListeners();
     }
 
@@ -86,8 +89,14 @@ class TaskManager {
     }
 
     static generateTaskId() {
-        let id = this.#_uniqueId;
-        this.#_uniqueId++;
+        // Generate a random and unique task id
+        let id;
+        let currentIds = this.tasks.map(task => task.id);
+        
+        do {
+            id = Math.random() * 10000;
+        } while (currentIds.includes(id))
+
         return id;
     }
 
@@ -96,13 +105,16 @@ class TaskManager {
         this._listeners.push(listener);
     }
 
-    // Task manipulation
     static notifyListeners() {
         // Update the live tasks based on any filters
         this.updateLiveTasks();
 
         // Check that the active id is in there, otherwise reset it
-        if (!this.checkValidIndex()) this.resetActiveIndex();
+        //if (!this.checkValidIndex()) this.resetActiveIndex();
+        if (!this.checkIndexExists()) this.resetActiveIndex();
+
+        // Update storage
+        this._storage.setStorage()
 
         // Run listeners
         this._listeners.forEach(listener => listener());
@@ -116,6 +128,16 @@ class TaskManager {
     static checkValidIndex() {
         // Check active index is in view
         let taskIds = this._tasksLive.map(task => task.id);
+        if (taskIds.includes(this.activeId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    static checkIndexExists() {
+        // Check active index is in view
+        let taskIds = this._tasks.map(task => task.id);
         if (taskIds.includes(this.activeId)) {
             return true;
         } else {
@@ -256,6 +278,11 @@ class TaskManager {
         this.tasks = [];
         this.activeMenu = 0;
         this.notifyListeners();
+    }
+
+    static clearCache() {
+        this._storage.clearCache();
+        this.init();
     }
 }
 
