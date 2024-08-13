@@ -462,22 +462,11 @@ body {
 }
 
 #complete-screen {
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
 }
 
-#complete-screen ~ *:not(.screen-complete) {
+#complete-screen ~ *:not(.screen-complete), #complete-screen-already ~ *:not(.screen-complete) {
     filter: blur(2px);
-}
-
-#complete-screen ~ .screen-description {
-}
-
-#complete-screen ~ .screen-complete, #complete-screen ~ .screen-complete > * {
-    /* flex-direction: column;
-    gap: 40px;
-    font-size: 60px; */
-    /* text-transform: uppercase;
-    transition-duration: 0.4s; */
 }
 
 #date-picker {

@@ -1,6 +1,5 @@
 import composeImg from '../assets/plus-box.svg';
 import deleteImg from '../assets/delete.svg';
-import completeImg from '../assets/check-circle.svg'
 import {createElement} from '../utils.js';
 import { TaskManager } from '../task-manager';
 
@@ -40,7 +39,7 @@ function render($container) {
         $img.src = btn.src;
         $img.alt = `${btnUpper} task icon`;
         $img.title = `${btnUpper} new task}`;
-        if (btn.onclick) $img.addEventListener('click', e => btn.onclick());
+        if (btn.onclick) $img.addEventListener('click', () => btn.onclick());
         return $img;
     }
 

@@ -105,14 +105,14 @@ function createProjectItem(project) {
     menuContainer.setAttribute('data-menu', menuIndex);
 
     // Listen for clicks
-    menuContainer.addEventListener('click', e => TaskManager.activeProject = project);
+    menuContainer.addEventListener('click', () => TaskManager.activeProject = project);
 
     // Delete button if not default
     if (project != 'Default') {
         let $deleteImg = createElement({'type': 'img', 'elemClass': 'icon'});
         $deleteImg.classList.add('delete-icon');
         $deleteImg.src = deleteImg;
-        $deleteImg.addEventListener('click', e => TaskManager.removeProject(project));
+        $deleteImg.addEventListener('click', () => TaskManager.removeProject(project));
         container.appendChild($deleteImg);
     }
     

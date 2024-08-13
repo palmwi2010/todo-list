@@ -25,13 +25,13 @@ function renderHeader() {
     $header.addEventListener('keyup', handleChange);
 }
 
-function renderDate() {
+const renderDate = function() {
     $datePicker.type = 'date';
     let $dateLabel = createElement({'type':'label', 'elemClass': 'screen-label', 'id':'date-label', 'elemText': "Due date:"});
     $dateLabel.htmlFor = 'date-picker';
     $dateRow.appendChild($dateLabel)
     $dateRow.appendChild($datePicker);
-    $datePicker.addEventListener('click', e => $datePicker.showPicker());
+    $datePicker.addEventListener('click', () => $datePicker.showPicker());
     $datePicker.setAttribute('data-task', 'date');
     $datePicker.addEventListener('change', handleChange);
 }
@@ -45,7 +45,7 @@ function renderPriorities() {
     });
     $dateRow.appendChild($priorityCircle);
     $dateRow.appendChild($priorityPicker);
-    $priorityCircle.addEventListener('click', e => $priorityPicker.showPicker());
+    $priorityCircle.addEventListener('click', () => $priorityPicker.showPicker());
 
     $priorityPicker.setAttribute('data-task', 'priority');
     $priorityPicker.addEventListener('change', handleChange);
@@ -123,7 +123,7 @@ function updateDescription(task) {
 function updateProject(task) {
     // Update picker with any new projects
     $categoryPicker.innerHTML = '';
-    const projects = TaskManager.projects;
+    const {projects} = TaskManager;
 
     projects.forEach(project => {
         let opt = createElement({'type': 'option', 'elemClass': 'cat-option', 'elemText': project});

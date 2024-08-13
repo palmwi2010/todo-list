@@ -1,13 +1,13 @@
-import tasks from './static/defaultTasks.json';
-import {FilterManager} from './filter-manager.js';
-import { getNextWeekDate, getTodayDate, getRandomDate, getRandomPriority } from './utils.js';
-import { TaskStorage } from './local-storage.js';
+import tasks from "./static/defaultTasks.json";
+import {FilterManager} from "./filter-manager.js";
+import { getNextWeekDate, getRandomDate, getRandomPriority } from "./utils.js";
+import { TaskStorage } from "./local-storage.js";
 
 class TaskManager {
 
     static _tasks = tasks;
     static _tasksLive = tasks;
-    static _projects = ['Default'];
+    static _projects = ["Default"];
     static _listeners = [];
     static _activeId;
     static _activeMenu = 0;
@@ -20,6 +20,8 @@ class TaskManager {
     static init() {
         if (!this._storage.getStorage()) {
             this.tasks = this.generateDefaultTasks(3);
+            this.projects = ["Default"];
+            this.activeMenu = 0;
         }
         this.notifyListeners();
     }
@@ -91,7 +93,7 @@ class TaskManager {
     static generateTaskId() {
         // Generate a random and unique task id
         let id;
-        let currentIds = this.tasks.map(task => task.id);
+        const currentIds = this.tasks.map(task => task.id);
         
         do {
             id = Math.random() * 10000;
@@ -106,7 +108,7 @@ class TaskManager {
     }
 
     static notifyListeners() {
-        // Update the live tasks based on any filters
+        // Update the live tasks based on any filtersu
         this.updateLiveTasks();
 
         // Check that the active id is in there, otherwise reset it
@@ -127,7 +129,7 @@ class TaskManager {
 
     static checkValidIndex() {
         // Check active index is in view
-        let taskIds = this._tasksLive.map(task => task.id);
+        const taskIds = this._tasksLive.map(task => task.id);
         if (taskIds.includes(this.activeId)) {
             return true;
         } else {
@@ -137,7 +139,7 @@ class TaskManager {
 
     static checkIndexExists() {
         // Check active index is in view
-        let taskIds = this._tasks.map(task => task.id);
+        const taskIds = this._tasks.map(task => task.id);
         if (taskIds.includes(this.activeId)) {
             return true;
         } else {
@@ -146,8 +148,8 @@ class TaskManager {
     }
 
     static resetActiveIndex() {
-        let ids = this._tasksLive.map(x => x.id);
-        let maxId = Math.max(...ids);
+        const ids = this._tasksLive.map(x => x.id);
+        const maxId = Math.max(...ids);
         this.activeId = maxId;
     }
 
@@ -159,13 +161,12 @@ class TaskManager {
         }
 
         // If it's in a project, set the new task to have the project category type
-        let newProject = this.activeMenu > 3 ? this.activeProject:'Default';
+        const newProject = this.activeMenu > 3 ? this.activeProject:"Default";
 
         // If it's in high priority, keep high priority
-        let newPriority = this.activeMenu == 1 ? 'High priority': '';
-        let newDate = getTodayDate();
+        const newPriority = this.activeMenu == 1 ? "High priority": "";
 
-        let newItem = {
+        const newItem = {
             "title": "New task", 
             "date": getNextWeekDate(), 
             "priority": newPriority,
@@ -181,12 +182,12 @@ class TaskManager {
     }
 
     static getTask(id) {
-        let getId = id ? id:this.activeId;
+        const getId = id ? id:this.activeId;
         return this._tasks.find(obj => obj.id == getId);
     }
 
     static deleteTask(id) {
-        let deleteId = id ? id:this.activeId;
+        const deleteId = id ? id:this.activeId;
         this.tasks = this.tasks.filter(item => item.id != deleteId);
         this.notifyListeners();
     }
@@ -226,7 +227,7 @@ class TaskManager {
 
         // Set any tasks with that project to Default
         this._tasks = this._tasks.map(task => {
-            if (task.project === title) task.project = 'Default';
+            if (task.project === title) task.project = "Default";
             return task;
         })
 
@@ -252,19 +253,19 @@ class TaskManager {
     static generateDefaultTasks(nTasks) {
 
         // If it's in high priority, keep high priority
-        let tasks = [];
-        let baseDescription = `Feel free to click on a card and enter your own description here. If you want to start from fresh, click "Clear all tasks" in the left sidebar menu!`.trim()
+        const tasks = [];
+        const baseDescription = "Feel free to click on a card and enter your own description here. If you want to start from fresh, click \"Clear all tasks\" in the left sidebar menu!".trim()
 
         for (let i = 0; i < nTasks; i++) {
 
-            let newItem = {
-                "title": `Task ${i + 1}`, 
-                "date": getRandomDate(), 
-                "priority": getRandomPriority(),
-                "description": baseDescription,
-                "project": 'Default',
-                "completed": false,
-                "id": this.generateTaskId()
+            const newItem = {
+                title: `Task ${i + 1}`, 
+                date: getRandomDate(), 
+                priority: getRandomPriority(),
+                description: baseDescription,
+                project: "Default",
+                completed: false,
+                id: this.generateTaskId()
             }
 
             tasks.push(newItem);
@@ -274,7 +275,7 @@ class TaskManager {
     }
 
     static resetState() {
-        this.projects = ['Default'];
+        this.projects = ["Default"];
         this.tasks = [];
         this.activeMenu = 0;
         this.notifyListeners();
